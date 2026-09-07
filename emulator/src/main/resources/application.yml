@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: emulator
+  main:
+    web-application-type: none
+
+emulator:
+  gateway-url: http://localhost:8090
+  devices-per-room: 4
+  rooms:
+    - Гостиная
+    - Спальня
+    - Кухня
+    - Детская
+  interval-millis: 1000

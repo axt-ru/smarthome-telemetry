@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: smarthome-postgres
+    environment:
+      POSTGRES_DB: smarthome
+      POSTGRES_USER: smarthome
+      POSTGRES_PASSWORD: smarthome
+    ports:
+      - "5440:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U smarthome -d smarthome" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: smarthome-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: smarthome
+      RABBITMQ_DEFAULT_PASS: smarthome
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+volumes:
+  postgres-data:
+  rabbitmq-data:

@@ -1,0 +1,26 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: gateway
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5440/smarthome
+    username: smarthome
+    password: smarthome
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5440/smarthome
+    user: smarthome
+    password: smarthome
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: smarthome
+    password: smarthome
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
