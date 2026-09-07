@@ -79,6 +79,8 @@ Postgres на 5440, потому что 5432 и 5430 у меня уже заня
 
 Ещё имена свойств у Flyway и DataSource разъезжаются: spring.datasource.username, но spring.flyway.user.
 
+**Jackson 2 в Spring Boot 4 больше нет.** Боот перешёл на Jackson 3 (пакет tools.jackson), а старого com.fasterxml.jackson.databind в classpath не осталось. Половина примеров из интернета отваливается с ClassNotFoundException на JsonMapper. В Spring AMQP вместо Jackson2JsonMessageConverter теперь JacksonJsonMessageConverter, старый помечен deprecated и скоро уедет.
+
 ## Что дальше
 
 Итерация 0 (скелет, инфраструктура, схема БД) готова. Дальше по плану:

@@ -18,6 +18,13 @@ spring:
     port: 5672
     username: smarthome
     password: smarthome
+    listener:
+      simple:
+        prefetch: 1000
+
+processor:
+  batch-size: 500
+  batch-timeout-millis: 1000
 
 management:
   endpoints:

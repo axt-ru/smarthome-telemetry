@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    api(platform("org.springframework.boot:spring-boot-dependencies:${property("springBootVersion")}"))
-    api("com.fasterxml.jackson.core:jackson-annotations")
+    compileOnly(platform("org.springframework.boot:spring-boot-dependencies:${property("springBootVersion")}"))
+    compileOnly("org.springframework.boot:spring-boot-starter-amqp")
 }
