@@ -31,6 +31,10 @@ subprojects {
 
     tasks.withType<Test> {
         useJUnitPlatform()
+        jvmArgs("-XX:+EnableDynamicAgentLoading")
+        testLogging {
+            events("passed", "failed", "skipped")
+        }
     }
 
     tasks.withType<JavaExec> {

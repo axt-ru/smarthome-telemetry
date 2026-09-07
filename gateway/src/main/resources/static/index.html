@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Умный дом. Телеметрия</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <h1>Умный дом</h1>
+    <span id="status" class="offline">нет данных</span>
+</header>
+
+<main>
+    <aside>
+        <h2>Датчики</h2>
+        <ul id="devices"></ul>
+    </aside>
+
+    <section>
+        <div id="head">
+            <div id="title">Выберите датчик</div>
+            <select id="period">
+                <option value="30">30 минут</option>
+                <option value="120">2 часа</option>
+                <option value="1440">сутки</option>
+                <option value="10080">неделя</option>
+            </select>
+        </div>
+        <div id="current"></div>
+        <canvas id="chart"></canvas>
+    </section>
+</main>
+
+<section id="rules-block">
+    <div class="col">
+        <h2>Правила</h2>
+        <table id="rules"></table>
+        <form id="rule-form">
+            <input name="name" placeholder="название" required>
+            <input name="room" placeholder="комната (пусто = все)">
+            <select name="metric">
+                <option value="TEMPERATURE">Температура</option>
+                <option value="HUMIDITY">Влажность</option>
+                <option value="CO2">CO₂</option>
+                <option value="POWER">Потребление</option>
+            </select>
+            <select name="conditionType">
+                <option value="GT">больше</option>
+                <option value="LT">меньше</option>
+                <option value="OUT_OF_RANGE">вне диапазона</option>
+            </select>
+            <input name="thresholdLow" type="number" step="any" placeholder="нижний порог">
+            <input name="thresholdHigh" type="number" step="any" placeholder="верхний порог">
+            <input name="consecutiveCount" type="number" value="3" title="срабатываний подряд">
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+
+    <div class="col">
+        <h2>Последние оповещения</h2>
+        <ul id="alerts"></ul>
+    </div>
+</section>
+
+<script src="/app.js"></script>
+</body>
+</html>

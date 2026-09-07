@@ -25,6 +25,19 @@ spring:
 processor:
   batch-size: 500
   batch-timeout-millis: 1000
+  aggregation:
+    lookback-minutes: 5
+    minute-delay-millis: 60000
+    hour-delay-millis: 600000
+  retention:
+    raw-hours: 24
+    cleanup-delay-millis: 3600000
+  rules:
+    refresh-delay-millis: 15000
+    silence-seconds: 60
+    silence-check-delay-millis: 30000
+  notification:
+    webhook-url: 
 
 management:
   endpoints:

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.otus.smarthome.common.MeasurementDto;
+import ru.otus.smarthome.gateway.telemetry.LiveTelemetryStream;
 import ru.otus.smarthome.gateway.telemetry.TelemetryPublisher;
 
 @RestController
@@ -20,13 +21,15 @@ import ru.otus.smarthome.gateway.telemetry.TelemetryPublisher;
 public class TelemetryController {
     private static final Logger log = LoggerFactory.getLogger(TelemetryController.class);
 
-    private static final int LOG_EVERY = 100;
+    private static final int LOG_EVERY = 500;
 
     private final TelemetryPublisher publisher;
+    private final LiveTelemetryStream liveStream;
     private final AtomicLong received = new AtomicLong();
 
-    public TelemetryController(TelemetryPublisher publisher) {
+    public TelemetryController(TelemetryPublisher publisher, LiveTelemetryStream liveStream) {
         this.publisher = publisher;
+        this.liveStream = liveStream;
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_NDJSON_VALUE})
@@ -34,6 +37,7 @@ public class TelemetryController {
     public Mono<Void> accept(@RequestBody Flux<MeasurementDto> measurements) {
         return measurements
                 .flatMap(measurement -> publisher.publish(measurement).thenReturn(measurement))
+                .doOnNext(liveStream::emit)
                 .doOnNext(this::countAndLog)
                 .then();
     }
